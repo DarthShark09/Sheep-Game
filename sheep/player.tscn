@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bifp4c2l4ci8a"]
+
+[ext_resource type="Script" uid="uid://dbja5ivaf1piw" path="res://Player.gd" id="1_4flbx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sh265"]
+
+[node name="Player" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_4flbx")
+
+[node name="Head" type="Node3D" parent="CharacterBody3D"]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+physics_interpolation_mode = 1
+shape = SubResource("SphereShape3D_sh265")
+debug_color = Color(0.706601, 0.267928, 1, 0.42)

@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4q7j637k00jm"]
+
+[ext_resource type="Texture2D" uid="uid://ck6uhwoytdkql" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="1_f2pkk"]
+[ext_resource type="Script" uid="uid://nkk3k6wtdevd" path="res://beta_world.gd" id="1_pfupc"]
+[ext_resource type="PackedScene" uid="uid://bifp4c2l4ci8a" path="res://player.tscn" id="2_pfupc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f2pkk"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_pfupc"]
+sky_material = SubResource("ProceduralSkyMaterial_f2pkk")
+
+[sub_resource type="Environment" id="Environment_cv13o"]
+background_mode = 2
+sky = SubResource("Sky_pfupc")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cv13o"]
+albedo_texture = ExtResource("1_f2pkk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cuqfb"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_f2pkk"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="Beta_World" type="Node3D"]
+script = ExtResource("1_pfupc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cv13o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_cv13o")
+mesh = SubResource("PlaneMesh_cuqfb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_f2pkk")
+
+[node name="Player" parent="." instance=ExtResource("2_pfupc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
